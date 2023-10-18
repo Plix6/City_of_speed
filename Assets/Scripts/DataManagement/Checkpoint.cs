@@ -2,20 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Checkpoint : MonoBehaviour
+public class Checkpoint
 {
-    private Vector3 checkpoint;
-    // Start is called before the first frame update
-    void Start()
-    {
-        ResetCheckpoint();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private Vector3 checkpoint = Vector3.zero;
+    
 
     public void SetCheckpoint (Vector3 checkpoint)
     {
@@ -27,7 +17,7 @@ public class Checkpoint : MonoBehaviour
         return this.checkpoint; 
     }
 
-    public bool IsCheckpoint()
+    public bool IsCheckpointSet()
     {
         return this.checkpoint != Vector3.zero;
     }
