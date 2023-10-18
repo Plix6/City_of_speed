@@ -11,19 +11,19 @@ public class DialogueInteraction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nextDialogue();
+        NextDialogue();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp("mouse 0"))
+        if (Input.GetKeyUp("Submit"))
         {
-            nextDialogue();
+            NextDialogue();
         }
     }
 
-    private void nextDialogue()
+    private void NextDialogue()
     {
         if (textLines.lines.Count > curCount)
         {
