@@ -7,6 +7,7 @@ using UnityEngine;
 [Serializable]
 public class Timer
 {
+    // TODO : change data to link with other class which can be serialized
     [SerializeField] private bool timerOn = false;
     [SerializeField] private bool endTimer = false;
     [SerializeField] private float time = 0;
@@ -37,7 +38,7 @@ public class Timer
 
     private int GetTimerMilliseconds()
     {
-        return (int) (time - (int) time) * 1000;
+        return (int) ((time - (int) time) * 1000f);
     }
 
     public void ResetTimer()

@@ -26,6 +26,7 @@ public class Leaderboard
             {   
                 // Create variable to store file content
                 string dataLoad = string.Empty;
+                Debug.Log("Init load data string");
                 // Create stream to read data from file
                 using (FileStream stream = new FileStream(fullPath, FileMode.Open))
                 {
@@ -33,6 +34,7 @@ public class Leaderboard
                     {
                         // Read data from file
                         dataLoad = reader.ReadToEnd();
+                        Debug.Log("Loaded file content : " + dataLoad);
                     }
                 }
                 // Deserialize the JSON data into the original format
@@ -46,6 +48,7 @@ public class Leaderboard
         else
         {
             // If no data is present or an error occurs, we store an empty list
+            Debug.LogError("No file stored the data");
             leaderboard = new List<Timer>();
         }
     }
@@ -60,6 +63,7 @@ public class Leaderboard
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
             // Convert data to be stored to JSON
             string dataStored = JsonUtility.ToJson(leaderboard);
+            Debug.Log("Data to JSON : " + dataStored);
             // Create stream to write data into file
             using (FileStream stream = new FileStream(fullPath, FileMode.Create))
             {
@@ -67,6 +71,7 @@ public class Leaderboard
                 {
                     // Store data into file
                     writer.Write(dataStored);
+                    Debug.Log("Data stored");
                 }
             }
         }
@@ -76,7 +81,7 @@ public class Leaderboard
         }
     }
 
-    public List<string> GetLeaderboard()
+    public List<string> GetLeaderboard() // Only gives the string times of the timers
     {
         List<string> entries = new List<string>();
         foreach (Timer timer in leaderboard)
@@ -99,6 +104,10 @@ public class Leaderboard
                 }
                 break;
             }
+        }
+        if (leaderboard.Count == 0) // If no leaderboard entries before, foreach will not run
+        {
+            leaderboard.Add(newTime);
         }
     }
 }
