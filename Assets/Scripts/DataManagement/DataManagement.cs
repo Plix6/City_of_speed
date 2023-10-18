@@ -5,7 +5,7 @@ using UnityEngine;
 public class DataManagement : MonoBehaviour
 {
     private string fileName = "game.data";
-    private string dirPath = Application.persistentDataPath;
+    private string dirPath;
 
     public Timer timer = new Timer();
     public Checkpoint checkpoint = new Checkpoint();
@@ -13,14 +13,17 @@ public class DataManagement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        leaderboard = new Leaderboard(fileName, dirPath);
+        leaderboard = new Leaderboard(fileName, dirPath: Application.persistentDataPath);
         leaderboard.LoadData();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (timer.IsActive())
+        {
+            timer.Addtime(Time.deltaTime);
+        }
     }
 
     public void Pause()
