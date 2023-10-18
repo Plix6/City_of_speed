@@ -34,17 +34,17 @@ public class Timer : MonoBehaviour
         }
     }
 
-    public int GetTimerMinutes()
+    private int GetTimerMinutes()
     {
         return (int) time / 60;
     }
 
-    public int GetTimerSeconds()
+    private int GetTimerSeconds()
     {
         return (int) time % 60;
     }
 
-    public int GetTimerMilliseconds()
+    private int GetTimerMilliseconds()
     {
         return (int) (time - (int) time) * 1000;
     }

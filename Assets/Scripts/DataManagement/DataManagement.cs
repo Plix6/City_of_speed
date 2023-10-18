@@ -7,9 +7,9 @@ public class DataManagement : MonoBehaviour
     private string fileName = "game.data";
     private string dirPath = Application.persistentDataPath;
 
-    private Timer timer = new Timer();
-    private Checkpoint checkpoint = new Checkpoint();
-    private Leaderboard leaderboard;
+    public Timer timer = new Timer();
+    public Checkpoint checkpoint = new Checkpoint();
+    public Leaderboard leaderboard;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,5 +21,15 @@ public class DataManagement : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1;
     }
 }

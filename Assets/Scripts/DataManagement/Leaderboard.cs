@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-[Serializable]
 public class Leaderboard
 {
     [SerializeField] private List<Timer> leaderboard = new List<Timer>();
