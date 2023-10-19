@@ -7,7 +7,6 @@ using UnityEngine;
 [Serializable]
 public class Timer
 {
-    // TODO : change data to link with other class which can be serialized
     [SerializeField] private bool timerOn = false;
     [SerializeField] private bool endTimer = false;
     [SerializeField] private float time = 0;
@@ -57,6 +56,11 @@ public class Timer
     public void StopTimer()
     {
         endTimer = true;
+    }
+
+    public bool IsTimerEnded()
+    {
+        return endTimer;
     }
 
     public float GetTime()

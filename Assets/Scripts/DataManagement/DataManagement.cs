@@ -2,21 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataManagement : MonoBehaviour
+public class DataManagement : MonoBehaviour // TODO - Attach to an empty object to activate timer/checkpoint management
 {
-    private string fileName = "game.data";
-    private string dirPath;
+    [SerializeField] private Timer timer = new Timer();
+    [SerializeField] private Checkpoint checkpoint = new Checkpoint();
+    [SerializeField] private GameObject leaderboardObject;
+    private Leaderboard leaderboard;
 
-    public Timer timer = new Timer();
-    public Checkpoint checkpoint = new Checkpoint();
-    public Leaderboard leaderboard;
-
-    public bool dataTest = false;
     // Start is called before the first frame update
     void Start()
     {
-        leaderboard = new Leaderboard(fileName, dirPath: Application.persistentDataPath);
-        leaderboard.LoadData();
+        this.leaderboard = leaderboardObject.GetComponent<Leaderboard>();
     }
 
     // Update is called once per frame
@@ -26,9 +22,10 @@ public class DataManagement : MonoBehaviour
         {
             timer.Addtime(Time.deltaTime);
         }
-        if (dataTest)
+        if (timer.IsTimerEnded())
         {
-            this.DataTesting();
+            leaderboard.UpdateLeaderboard(this.timer);
+            this.timer = new Timer();
         }
     }
 
@@ -40,32 +37,5 @@ public class DataManagement : MonoBehaviour
     public void Resume()
     {
         Time.timeScale = 1;
-    }
-
-    private void DataTesting()
-    {
-        dataTest = false;
-
-        timer.StopTimer();
-        Debug.Log("Initial length : " + leaderboard.GetLeaderboard().Count);
-        leaderboard.UpdateLeaderboard(timer);
-        Debug.Log("Final length : " + leaderboard.GetLeaderboard().Count);
-
-        foreach (string record in leaderboard.GetLeaderboard())
-        {
-            Debug.Log(record);
-        }
-
-        leaderboard.SaveData();
-        Debug.Log("Length after save : " + leaderboard.GetLeaderboard().Count);
-        leaderboard.LoadData();
-        Debug.Log("Length after load : " + leaderboard.GetLeaderboard().Count);
-
-        foreach (string record in leaderboard.GetLeaderboard())
-        {
-            Debug.Log(record);
-        }
-
-        timer = new Timer();
     }
 }
