@@ -37,7 +37,7 @@ public class Timer
 
     private int GetTimerMilliseconds()
     {
-        return (int) (time - (int) time) * 1000;
+        return (int) ((time - (int) time) * 1000f);
     }
 
     public void ResetTimer()
@@ -56,6 +56,11 @@ public class Timer
     public void StopTimer()
     {
         endTimer = true;
+    }
+
+    public bool IsTimerEnded()
+    {
+        return endTimer;
     }
 
     public float GetTime()
