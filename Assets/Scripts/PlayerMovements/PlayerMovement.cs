@@ -69,6 +69,9 @@ public class PlayerMovement : MonoBehaviour
 
     public bool WallRunning;
 
+    // Game Controller
+    public GameController gameController;
+
     //--------------------------
     //      START FUNCTION
     //--------------------------
@@ -85,17 +88,20 @@ public class PlayerMovement : MonoBehaviour
     //--------------------------
     void Update()
     {
-        // Ground Check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        if (gameController.GetGameIsActive())
+        {
+            // Ground Check
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-        MyInput();
-        SpeedControl();
-        StateHandler();
+            MyInput();
+            SpeedControl();
+            StateHandler();
 
-        if (grounded)
-            rb.drag = groundDrag;
-        else
-            rb.drag = 0f;
+            if (grounded)
+                rb.drag = groundDrag;
+            else
+                rb.drag = 0f;
+        }
     }
     private void FixedUpdate()
     {

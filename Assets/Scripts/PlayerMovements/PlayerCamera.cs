@@ -22,6 +22,9 @@ public class PlayerCamera : MonoBehaviour
     float xRotation; 
     float yRotation;
 
+    // Game Controller
+    public GameController gameController;
+
     //--------------------------
     //      START FUNCTION
     //--------------------------
@@ -37,25 +40,26 @@ public class PlayerCamera : MonoBehaviour
     //      UPDATE FUNCTION
     //--------------------------
     private void Update()
-    {   
-        // Collect Mouse Input
-        float inputX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float inputY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
-
-        yRotation += inputX;
-        xRotation -= inputY;
-
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        // Rotate camera and orientation
-        if (!lockCamera)
+    {
+        if (gameController.GetGameIsActive())
         {
+            // Collect Mouse Input
+            float inputX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
+            float inputY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+
+            yRotation += inputX;
+            xRotation -= inputY;
+
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+            // Rotate camera and orientation          
             camHolder.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
             orientation.rotation = Quaternion.Euler(0f, yRotation, 0f);
+            
         }
 
         // Unlock, show cursor
-        if (Input.GetButtonDown("Submit"))
+        /*if (Input.GetButtonDown("Submit"))
         {
             if (!lockCamera)
             {
@@ -69,7 +73,7 @@ public class PlayerCamera : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 lockCamera = false;
             }
-        }
+        }*/
     }
 
     //--------------------
