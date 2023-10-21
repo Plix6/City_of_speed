@@ -5,26 +5,12 @@ using UnityEngine;
 
 
 [Serializable]
-public class Timer : MonoBehaviour
+public class Timer
 {
     [SerializeField] private bool timerOn = false;
     [SerializeField] private bool endTimer = false;
     [SerializeField] private float time = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (timerOn)
-        {
-            time += Time.deltaTime;
-        }
-    }
 
     public void ToggleTimer()
     {
@@ -32,6 +18,11 @@ public class Timer : MonoBehaviour
         {
             timerOn = !timerOn;
         }
+    }
+
+    public bool IsActive()
+    {
+        return this.timerOn && !this.endTimer;
     }
 
     private int GetTimerMinutes()
@@ -46,7 +37,7 @@ public class Timer : MonoBehaviour
 
     private int GetTimerMilliseconds()
     {
-        return (int) (time - (int) time) * 1000;
+        return (int) ((time - (int) time) * 1000f);
     }
 
     public void ResetTimer()
@@ -57,9 +48,19 @@ public class Timer : MonoBehaviour
         }
     }
 
+    public void Addtime(float delta)
+    {
+        time += delta;
+    }
+
     public void StopTimer()
     {
         endTimer = true;
+    }
+
+    public bool IsTimerEnded()
+    {
+        return endTimer;
     }
 
     public float GetTime()
