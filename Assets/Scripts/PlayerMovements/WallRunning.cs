@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class WallRunning : MonoBehaviour
 {
+    //---------------------
+    //      VARIABLES
+    //---------------------
+
+    // Wallrunning variables
     [Header("WallRunning")]
     public LayerMask whatIsWall;
     public LayerMask whatIsGround;
@@ -16,11 +21,13 @@ public class WallRunning : MonoBehaviour
     private float wallRunTimer;
     private float lastWallCooldown;
 
+    // Input variables
     [Header("Input")]
     public KeyCode jumpKey = KeyCode.Space;
     public float horizontalInput;
     public float verticalInput;
 
+    // Detection variables
     [Header("Detection")]
     public float wallCheckDistance;
     public float minJumpHeight;
@@ -30,25 +37,31 @@ public class WallRunning : MonoBehaviour
     private bool wallRight;
     private Object lastWall;
 
+    // Exiting wall variables
     [Header("Exiting")]
     private bool exitingWall;
     public float exitWallTime;
     private float exitWallTimer;
 
+    // References to other objects and scripts
     [Header("References")]
     public Transform orientation;
     public PlayerCamera camera;
     private PlayerMovement pm;
     private Rigidbody rb;
 
-    // Start is called before the first frame update
+    //--------------------------
+    //      START FUNCTION
+    //--------------------------
     void Start()
     {
         pm = GetComponent<PlayerMovement>();
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+    //--------------------------
+    //      UPDATE FUNCTION
+    //--------------------------
     void Update()
     {
         CheckForWall();
@@ -62,6 +75,11 @@ public class WallRunning : MonoBehaviour
             WallRunningMovement();
         }
     }
+
+    //--------------------
+    //      FUNCTIONS
+    //--------------------
+
     // Check if the player is near a wall
     private void CheckForWall()
     {
@@ -129,9 +147,8 @@ public class WallRunning : MonoBehaviour
         else
         {
             if (pm.WallRunning)
-            {
                 StopWallRun();
-            }
+            
             else
             {
                 if (lastWallCooldown > 0)
@@ -151,9 +168,7 @@ public class WallRunning : MonoBehaviour
     {
         // Check if the wall is the same as the last wall (to prevent jumping back and forth)
         if (lastWall == (wallRight ? rightWallhit.collider : leftWallhit.collider))
-        {
             return;
-        }
         else
         {
             // Get the wall id

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //---------------------
+    //      VARIABLES
+    //---------------------
+
+    // Movement variables
     [Header("Movement")]
     private float moveSpeed;
     public float walkSpeed;
@@ -11,7 +16,9 @@ public class PlayerMovement : MonoBehaviour
     public float wallRunSpeed;
 
     public float groundDrag;
+    Vector3 moveDirection;
 
+    // Jumping variables
     [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
@@ -19,35 +26,36 @@ public class PlayerMovement : MonoBehaviour
     bool canJump = true;
     bool canDoubleJump = false;
 
+    // Crouching variables
     [Header("Crouching")]
     public float crouchSpeed;
     public float crouchYScale;
     private float startYScale;
 
+    // Slope Handling variables
     [Header("Slope Handling")]
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
-
+    // Keybind variables
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
 
+    float horizontalInput;
+    float verticalInput;
+
+    // Ground Check variables
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
     bool grounded;
 
-    public Transform orientation;
+    public Transform orientation; // Player orientation
 
-    float horizontalInput;
-    float verticalInput;
-
-    Vector3 moveDirection;
-
-    Rigidbody rb;
+    Rigidbody rb; // Player rigidbody
 
     public MovementState state;
     public enum MovementState
@@ -61,7 +69,9 @@ public class PlayerMovement : MonoBehaviour
 
     public bool WallRunning;
 
-    // Start is called before the first frame update
+    //--------------------------
+    //      START FUNCTION
+    //--------------------------
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -70,7 +80,9 @@ public class PlayerMovement : MonoBehaviour
         startYScale = transform.localScale.y;
     }
 
-    // Update is called once per frame
+    //--------------------------
+    //      UPDATE FUNCTION
+    //--------------------------
     void Update()
     {
         // Ground Check
@@ -81,19 +93,18 @@ public class PlayerMovement : MonoBehaviour
         StateHandler();
 
         if (grounded)
-        {
             rb.drag = groundDrag;
-        }
         else
-        {
             rb.drag = 0f;
-        }
     }
     private void FixedUpdate()
     {
         MovePlayer();
     }
 
+    //--------------------
+    //      FUNCTIONS
+    //--------------------
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -129,6 +140,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // State Machine for movement Function
     private void StateHandler()
     {
         // Wallrunning
@@ -162,6 +174,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Movement Function
     private void MovePlayer()
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
@@ -172,9 +185,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force);
 
             if(rb.velocity.y > 0)
-            {
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
-            }
         }
 
         // on ground
@@ -190,6 +201,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    // Speed Control Function
     private void SpeedControl()
     {
         // Limit speed on slope
@@ -215,6 +227,7 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    // Jump Function
     private void Jump()
     {
         exitingSlope = true;
@@ -225,6 +238,7 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
+    // Reset Jump Function
     private void ResetJump()
     {
         canJump = true;
@@ -232,6 +246,7 @@ public class PlayerMovement : MonoBehaviour
         exitingSlope = false;
     }
 
+    // Slope Handling Functions
     public bool OnSlope()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
@@ -243,6 +258,7 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
+    // Get slope move direction function
     public Vector3 GetSlopeMoveDirection(Vector3 direction)
     {
         return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;

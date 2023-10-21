@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class Sliding : MonoBehaviour
 {
+    //---------------------
+    //      VARIABLES
+    //---------------------
+
+    // References to other objects and scripts
     [Header("References")]
     public Transform orientation;
     public Transform playerObj;
     private Rigidbody rb;
     private PlayerMovement pm;
 
+    // Sliding variables
     [Header("Sliding")]
     public float maxSlideTime;
     public float slideForce;
@@ -18,13 +24,17 @@ public class Sliding : MonoBehaviour
     public float slideYScale;
     private float startYScale;
 
+    private bool sliding;
+
+    // Input variables
     [Header("Input")]
     public KeyCode slideKey = KeyCode.LeftControl;
     private float horizontalInput;
     private float verticalInput;
 
-    private bool sliding;
-
+    //--------------------------
+    //      START FUNCTION
+    //--------------------------
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -33,6 +43,9 @@ public class Sliding : MonoBehaviour
         startYScale = playerObj.localScale.y;
     }
 
+    //--------------------------
+    //      UPDATE FUNCTION
+    //--------------------------
     private void Update()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -51,6 +64,11 @@ public class Sliding : MonoBehaviour
             SlidingMovement();
     }
 
+    //--------------------
+    //      FUNCTIONS
+    //--------------------
+
+    // Start Sliding Function
     private void StartSlide()
     {
         sliding = true;
@@ -61,6 +79,7 @@ public class Sliding : MonoBehaviour
         slideTimer = maxSlideTime;
     }
 
+    // Sliding Movement Function
     private void SlidingMovement()
     {
         Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
@@ -83,6 +102,7 @@ public class Sliding : MonoBehaviour
             StopSlide();
     }
 
+    // Stop Sliding Function
     private void StopSlide()
     {
         sliding = false;

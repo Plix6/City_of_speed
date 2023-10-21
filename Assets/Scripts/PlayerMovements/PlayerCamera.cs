@@ -5,19 +5,26 @@ using DG.Tweening;
 
 public class PlayerCamera : MonoBehaviour
 {
-    // Variables
-    public float sensX;
+    //---------------------
+    //      VARIABLES
+    //---------------------
+
+    // Mouse Sensitivity
+    public float sensX; 
     public float sensY;
 
-    public bool lockCamera = true;
+    public bool lockCamera = true; // Lock camera to player
 
-    public Transform orientation;
-    public Transform camHolder;
+    public Transform orientation; // Player orientation
+    public Transform camHolder; // Camera holder
 
-    float xRotation;
+    // Camera rotation
+    float xRotation; 
     float yRotation;
-    
-    // Start is called before the first frame update
+
+    //--------------------------
+    //      START FUNCTION
+    //--------------------------
     private void Start()
     {
         // Lock and hide cursor
@@ -26,7 +33,9 @@ public class PlayerCamera : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    //--------------------------
+    //      UPDATE FUNCTION
+    //--------------------------
     private void Update()
     {   
         // Collect Mouse Input
@@ -62,12 +71,18 @@ public class PlayerCamera : MonoBehaviour
             }
         }
     }
-    
+
+    //--------------------
+    //      FUNCTIONS
+    //--------------------
+
+    // Camera Shake Function
     public void DoFov(float endValue)
     {
         GetComponent<Camera>().DOFieldOfView(endValue, 0.25f);
     }
 
+    // Camera Tilt Function
     public void DoTilt(float zTilt)
     {
         transform.DOLocalRotate(new Vector3(0,0, zTilt), 0.25f);
