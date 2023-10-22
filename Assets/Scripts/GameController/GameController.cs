@@ -5,16 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField] private GameObject dataMangementObject;
+    private DataManagement dataManagement;
     private bool gameIsActive = false;
     private bool gameAsStarted = false;
-
-    private Timer timer;
 
     public TMPro.TextMeshProUGUI timerText;
 
     private void Start()
     {
-        timer = new Timer();
+        dataManagement = dataMangementObject.GetComponent<DataManagement>();
+        // When game is finished, call dataManagement.StopTimer(); this will end timer + save into leaderboard
     }
 
     private void Update()
@@ -23,9 +24,7 @@ public class GameController : MonoBehaviour
 
         if(gameAsStarted && gameIsActive)
         {
-            timer.Addtime(Time.deltaTime);
-            // Get the timer text and set it to the timer value
-            timerText.text = timer.ToString();
+            timerText.text = dataManagement.GetTimer();
         }
     }
 
@@ -36,6 +35,10 @@ public class GameController : MonoBehaviour
         {
             gameIsActive = true;
             gameAsStarted = true;
+            if (!dataManagement.IsTimerActive()) 
+            {
+                dataManagement.ToggleTimer();
+            }
         }
 
         // Pause game
