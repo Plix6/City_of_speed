@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float groundDrag;
     Vector3 moveDirection;
+    private Vector3 velocityToSet;
 
     // Jumping variables
     [Header("Jumping")]
@@ -270,5 +271,31 @@ public class PlayerMovement : MonoBehaviour
         return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
     }
 
+    // Calculations for the Grapple Jump
+    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
+    {
+
+        velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
+        Invoke(nameof(SetVelocity), 0.1f);
+    }
+    // Calculate speed during Grapple Jump
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity)
+            + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return velocityXZ + velocityY;
+    }
+
+    // Set speed during the Grapple Jump
+    private void SetVelocity()
+    {
+        rb.velocity = velocityToSet;
+    }
 }
 

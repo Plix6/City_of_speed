@@ -13,7 +13,7 @@ public class swinging : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private LayerMask grappleable;
 
-    private float maxSwingDistance = 25f;
+    [SerializeField] private float maxSwingDistance = 50f;
     private Vector3 swingPoint;
     private Vector3 currentGrapplePosition;
     private SpringJoint joint;

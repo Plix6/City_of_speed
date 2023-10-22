@@ -6,7 +6,7 @@ public class Grappling : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    private playerMovement pm;
+    private PlayerMovement pm;
     [SerializeField] private Transform cam;
     [SerializeField] private Transform gunTip;
     [SerializeField] private LayerMask grappleable;
@@ -26,7 +26,7 @@ public class Grappling : MonoBehaviour
 
     private void Start()
     {
-        pm = GetComponent<playerMovement>();
+        pm = GetComponent<PlayerMovement>();
     }
 
     private void Update()
@@ -59,8 +59,6 @@ public class Grappling : MonoBehaviour
 
         grappling = true;
 
-        pm.freezeMovement = true;
-
         RaycastHit hit;
         if (Physics.Raycast(cam.position, cam.forward, out hit, maxDistance, grappleable))
         {
@@ -79,7 +77,6 @@ public class Grappling : MonoBehaviour
 
     private void ExecuteGrapple()
     {
-        pm.freezeMovement = false;
 
         Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
 
@@ -97,11 +94,14 @@ public class Grappling : MonoBehaviour
 
     public void StopGrapple()
     {
-        pm.freezeMovement = false;
         grappling = false;
 
         grappleCooldownTimer = grappleCooldown;
 
         lr.enabled = false;
     }
+
+    
+
+    
 }
