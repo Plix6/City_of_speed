@@ -7,7 +7,6 @@ public class CameraLook : MonoBehaviour
 {
     private float rotationX = 0.0f;
     private float rotationY = 0.0f;
-    private float moveX = 0.0f;
     private float minValue = -90f;
     private float maxValue = 90f;
     private float mouseSpeed = 100f;
