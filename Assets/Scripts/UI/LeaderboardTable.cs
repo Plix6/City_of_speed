@@ -6,9 +6,12 @@ public class LeaderboardTable : MonoBehaviour
 {
     private Transform entryContainer;
     private Transform entryTemplate;
+    [SerializeField] private GameObject leaderboardObject;
+    private Leaderboard leaderboard;
 
     private void Start()
     {
+        leaderboard = leaderboardObject.GetComponent<Leaderboard>();
         entryContainer = transform.Find("Container");
         entryTemplate = entryContainer.Find("Template");
 
@@ -16,16 +19,18 @@ public class LeaderboardTable : MonoBehaviour
 
         float templateHeight = 45f;
 
+
         // TODO - Get leaderboard data from data management script
         // Do not put 10 , put the size of the leaderboard
-        for (int i = 0; i < 10; i++)
+
+        foreach (string record in leaderboard.GetLeaderboard())
         {
+            int rank = leaderboard.GetLeaderboard().IndexOf(record) + 1;
             Transform entryTransform = Instantiate(entryTemplate, entryContainer);
             RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-            entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * i);
+            entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * (rank - 1));
             entryTransform.gameObject.SetActive(true);
 
-            int rank = i + 1;
             string rankString;
             switch (rank)
             {
@@ -38,7 +43,7 @@ public class LeaderboardTable : MonoBehaviour
             entryTransform.Find("PosText").GetComponent<TMPro.TextMeshProUGUI>().text = rankString;
 
             // TODO - Get leaderboard data from data management script
-            // entryTransform.Find("ScoreText").GetComponent<TMPro.TextMeshProUGUI>().text = values[i].ToString();
+            entryTransform.Find("ScoreText").GetComponent<TMPro.TextMeshProUGUI>().text = record;
 
             // TODO - Get name data from data management script
             // entryTransform.Find("NameText").GetComponent<TMPro.TextMeshProUGUI>().text = names[i].ToString();

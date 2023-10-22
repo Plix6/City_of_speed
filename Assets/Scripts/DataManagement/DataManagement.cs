@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DataManagement : MonoBehaviour // TODO - Attach to an empty object to activate timer/checkpoint management
 {
-    [SerializeField] private Timer timer = new Timer();
+    private Timer timer = new Timer();
     [SerializeField] private Checkpoint checkpoint = new Checkpoint();
     [SerializeField] private GameObject leaderboardObject;
     private Leaderboard leaderboard;
@@ -37,5 +37,25 @@ public class DataManagement : MonoBehaviour // TODO - Attach to an empty object 
     public void Resume()
     {
         Time.timeScale = 1;
+    }
+
+    public void ToggleTimer()
+    {
+        timer.ToggleTimer();
+    }
+
+    public void StopTimer()
+    {
+        timer.StopTimer();
+    }
+
+    public bool IsTimerActive()
+    {
+        return timer.IsActive();
+    }
+
+    public string GetTimer()
+    {
+        return timer.ToString();
     }
 }

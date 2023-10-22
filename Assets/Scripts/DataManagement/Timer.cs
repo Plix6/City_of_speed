@@ -70,7 +70,7 @@ public class Timer
 
     public override string ToString()
     {
-        return string.Format("{0}:{1}:{2}", 
+        return string.Format("{0:D2}:{1:D2}:{2:D3}", 
             this.GetTimerMinutes(), 
             this.GetTimerSeconds(), 
             this.GetTimerMilliseconds());
