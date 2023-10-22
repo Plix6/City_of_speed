@@ -8,9 +8,25 @@ public class GameController : MonoBehaviour
     private bool gameIsActive = false;
     private bool gameAsStarted = false;
 
+    private Timer timer;
+
+    public TMPro.TextMeshProUGUI timerText;
+
+    private void Start()
+    {
+        timer = new Timer();
+    }
+
     private void Update()
     {
         InputManager();
+
+        if(gameAsStarted && gameIsActive)
+        {
+            timer.Addtime(Time.deltaTime);
+            // Get the timer text and set it to the timer value
+            timerText.text = timer.ToString();
+        }
     }
 
     private void InputManager()
@@ -23,7 +39,7 @@ public class GameController : MonoBehaviour
         }
 
         // Pause game
-        if (gameAsStarted && Input.GetButtonDown("Cancel"))
+        if (gameAsStarted && gameIsActive && Input.GetButtonDown("Cancel"))
         {
             gameIsActive = false;
             // Unlock and show cursor
