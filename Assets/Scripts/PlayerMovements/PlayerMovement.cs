@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
+    public KeyCode backToCheckpoint = KeyCode.R;
 
     float horizontalInput;
     float verticalInput;
@@ -117,6 +118,12 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        // back to checkpoint
+        if (Input.GetKeyDown(backToCheckpoint) && gameController.canBackToCheckpoint())
+        {
+            StartCoroutine(Respawn());
+        }
+
         // Jump
         if (Input.GetKey(jumpKey) && canJump && grounded)
         {
@@ -145,6 +152,17 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
+    }
+
+    IEnumerator Respawn()
+    {
+        rb.isKinematic = true;
+        yield return new WaitForSeconds(0.01f);
+        Debug.Log(gameController.GetCheckpoint());
+        transform.position = gameController.GetCheckpoint();
+        yield return new WaitForSeconds(0.01f);
+        rb.isKinematic = false;
+        rb.useGravity = true;
     }
 
     // State Machine for movement Function
