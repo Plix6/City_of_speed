@@ -43,6 +43,7 @@ public class GameController : MonoBehaviour
         // Pause game
         if (gameAsStarted && gameIsActive && Input.GetButtonDown("Cancel"))
         {
+            Time.timeScale = 0;
             gameIsActive = false;
             // Unlock and show cursor
             Cursor.visible = true;
@@ -56,6 +57,7 @@ public class GameController : MonoBehaviour
     public void SetGameIsActive()
     {
         gameIsActive = true;
+        Time.timeScale = 1;
     }
 
     private void OnGUI()
