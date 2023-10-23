@@ -13,5 +13,13 @@ MonoBehaviour:
   m_Name: Tutorial
   m_EditorClassIdentifier: 
   lines:
-  - Use ZQSD keys to move.
-  - Press SPACE to jump.
+  - Press enter to continue the tutorial
+  - Use ZQSD or arrow keys to move.
+  - 'Press SPACE to jump. '
+  - Press SPACE again while jumping to do a double jump.
+  - Do a left click to use the grapple to swing.
+  - Do a right click to use the grapple to pull.
+  - Press R to respawn at the last checkpoint.
+  - Press C to crouch.
+  - Press shift to sprint.
+  - Press ctrl to slide.
