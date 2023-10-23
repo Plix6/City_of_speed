@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class powerupCoin : MonoBehaviour
 {
+    // Objet qui va stocker un effet visuel
     public GameObject CoinEffect;
+    // Valeur de notre pièce
     public int value = 1;
     
     void OnTriggerEnter(Collider other)
@@ -14,11 +16,10 @@ public class powerupCoin : MonoBehaviour
 
     void TakeCoin()
     {
-        //Effect when the coin is touched
+        // Effet visuel quand la pièce est touchée
         Instantiate(CoinEffect, transform.position, transform.rotation);
-        
 
-        //Destroy after taken
+        // Suppression de la pièce et augmentation du compteur
         Destroy(gameObject);
         CoinCounter.instance.IncreaseCoins(value);
     }

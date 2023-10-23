@@ -4,36 +4,38 @@ using UnityEngine;
 
 public class powerupLessSpeed : MonoBehaviour
 {
-    public GameObject JumpEffect;
+    // Effet visuel, multiplicateur, durée du powerup (les trois publiques)
+    public GameObject UnSpeedEffect;
     public float multiplier = 1.5f;
     public float duration = 4;
 
+    // Quand on touche le powerup
     void OnTriggerEnter(Collider other)
     {
-        StartCoroutine(JumpHigher(other));
-
+        // Utilisation d'une coroutine pour l'utilisation d'une durée
+        StartCoroutine(Slower(other));
     }
 
-    IEnumerator JumpHigher(Collider player)
+    IEnumerator Slower(Collider player)
     {
-        //Effect when the powerup is touched
-        Instantiate(JumpEffect, transform.position, transform.rotation);
+        //Effet visuel
+        Instantiate(UnSpeedEffect, transform.position, transform.rotation);
 
-        //Change speed
+        //Changement de vitesse (on récupère les valeurs dans le script du player)
         PlayerMovement playerMovement = player.transform.parent.GetComponent<PlayerMovement>();
         playerMovement.walkSpeed /= multiplier;
         playerMovement.sprintSpeed /= multiplier;
 
-        //Wait X seconds
+        // On attend X secondes avant de détruire (donc on rend invisible le powerup)
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
         yield return new WaitForSeconds(duration);
 
-        //Revert back to normal
+        // On remet tout normal
         playerMovement.walkSpeed *= multiplier;
         playerMovement.sprintSpeed *= multiplier;
 
-        //Destroy after taken
+        // Et on détruit!
         Destroy(gameObject);
     }
 }
