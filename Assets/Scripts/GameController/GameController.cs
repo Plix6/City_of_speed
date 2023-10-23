@@ -66,7 +66,7 @@ public class GameController : MonoBehaviour
             }
         }
 
-        if (dataManagement.GetPreviousCheckpointsNumber() == 2) // checkpointCount + 1
+        if (dataManagement.GetPreviousCheckpointsNumber() == checkpointCount + 1)
         {
             gameIsActive = false;
             dataManagement.StopTimer();
