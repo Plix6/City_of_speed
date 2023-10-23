@@ -83,7 +83,7 @@ public class GameController : MonoBehaviour
         if (gameAsStarted && gameIsActive && Input.GetButtonDown("Cancel"))
         {
             // Pausing timer
-            Time.timeScale = 0;
+            dataManagement.ToggleTimer();
 
             gameIsActive = false;
             // Unlock and show cursor
@@ -120,7 +120,7 @@ public class GameController : MonoBehaviour
         gameIsActive = true;
 
         // Un-pausing timer
-        Time.timeScale = 1;
+        dataManagement.ToggleTimer();
     }
 
     // Set the game as started
@@ -132,7 +132,7 @@ public class GameController : MonoBehaviour
             GUI.color = new Color(1, 0, 0, Mathf.PingPong(Time.time, 1));  
             GUI.skin.label.fontSize = 50;
             GUI.skin.label.fontStyle = FontStyle.Bold;
-            GUI.Label(new Rect(Screen.width / 2 - 238, Screen.height / 2 - 50, 475, 100), "Press Enter to Start");
+            GUI.Label(new Rect(Screen.width / 2 - 238, Screen.height / 2 + 50, 475, 100), "Press Enter to Start");
         }
     }
 
