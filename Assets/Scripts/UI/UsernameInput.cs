@@ -6,25 +6,22 @@ using UnityEngine.UI;
 
 public class UsernameInput : MonoBehaviour
 {
-    [SerializeField] GameObject dataManagementObject;
-    [SerializeField] TMP_InputField input;
-    [SerializeField] Button button;
-
+    private TMP_InputField inputField;
     private string username;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        this.inputField = GetComponent<TMP_InputField>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        username = input.text;
-        if (username.Length > 10)
+        username = inputField.text;
+        if (username.Length > 3)
         {
-            input.text = username.Substring(0, 10);
+            inputField.text = username.Substring(0, 3);
         }
     }
 }

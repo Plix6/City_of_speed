@@ -11,7 +11,7 @@ public class DataManagement : MonoBehaviour // TODO - Attach to an empty object 
     private Checkpoint checkpoint = new Checkpoint();
     [SerializeField] private Leaderboard leaderboard;
 
-    private readonly int USERNAME_CHARACTER_LIMIT = 10;
+    private readonly int USERNAME_CHARACTER_SIZE = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +27,7 @@ public class DataManagement : MonoBehaviour // TODO - Attach to an empty object 
         {
             timer.Addtime(Time.deltaTime);
         }
-        // Updates leaderboard and resets timer if timer is ended
+        // Updates leaderboard and resets timer if timer is ended and username is set
         if (timer.IsTimerEnded() && username != string.Empty)
         {
             leaderboard.UpdateLeaderboard(this.timer, username);
@@ -93,11 +93,23 @@ public class DataManagement : MonoBehaviour // TODO - Attach to an empty object 
     // Sets the username. Returns a bool to check if username has been set
     public bool SetUsername(string name)
     {
-        if (name.Length > USERNAME_CHARACTER_LIMIT)
+        if (name.Length == USERNAME_CHARACTER_SIZE && CheckUsername(name))
         {
-            return false;
+            this.username = name;
+            return true;
         }
-        this.username = name;
+        return false;
+    }
+
+    private bool CheckUsername(string username)
+    {
+        foreach (char character in username)
+        {
+            if (!char.IsLetterOrDigit(character))
+            {
+                return false;
+            }
+        }
         return true;
     }
 }

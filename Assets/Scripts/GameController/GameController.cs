@@ -34,7 +34,6 @@ public class GameController : MonoBehaviour
     {
         usernameInputCanvas.SetActive(false);
         dataManagement = dataManagementObject.GetComponent<DataManagement>();
-        // When game is finished, call dataManagement.StopTimer(); this will end timer + save into leaderboard
 
         // For each target in the scene, add it to the list of targets
         foreach (Transform child in targetsCheckpoint.transform)
@@ -69,6 +68,7 @@ public class GameController : MonoBehaviour
 
         if (dataManagement.GetPreviousCheckpointsNumber() == 2) // checkpointCount + 1
         {
+            gameIsActive = false;
             dataManagement.StopTimer();
             usernameInputCanvas.SetActive(true);
             playerUICanvas.SetActive(false);

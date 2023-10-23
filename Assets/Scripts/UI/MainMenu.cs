@@ -9,6 +9,9 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        // Load data
+        DataPersistenceManager.instance.LoadGame();
+
         // Lock and hide cursor
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
