@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -144,7 +145,7 @@ public class GameController : MonoBehaviour
         if (!gameIsActive && !gameAsStarted)
         {
             // Display a smooth red clignotant bold large text to say to press enter to start
-            GUI.color = new Color(1, 0, 0, Mathf.PingPong(Time.time, 1));  
+            GUI.color = new Color(1, 0, 0, Mathf.PingPong(Time.time, 1));
             GUI.skin.label.fontSize = 50;
             GUI.skin.label.fontStyle = FontStyle.Bold;
             GUI.Label(new Rect(Screen.width / 2 - 238, Screen.height / 2 + 50, 475, 100), "Press Enter to Start");
