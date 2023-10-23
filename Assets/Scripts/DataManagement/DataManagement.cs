@@ -6,12 +6,12 @@ public class DataManagement : MonoBehaviour // TODO - Attach to an empty object 
 {
     [SerializeField] private GameObject leaderboardObject;
 
-    private Timer timer = new Timer();
-    private string username = string.Empty;
+    [SerializeField] private Timer timer = new Timer();
+    [SerializeField] private string username = string.Empty;
     private Checkpoint checkpoint = new Checkpoint();
-    private Leaderboard leaderboard;
+    [SerializeField] private Leaderboard leaderboard;
 
-    private int usernameCharactersLimit = 12;
+    private readonly int USERNAME_CHARACTER_LIMIT = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -99,7 +99,7 @@ public class DataManagement : MonoBehaviour // TODO - Attach to an empty object 
     // Sets the username. Returns a bool to check if username has been set
     public bool SetUsername(string name)
     {
-        if (name.Length > usernameCharactersLimit)
+        if (name.Length > USERNAME_CHARACTER_LIMIT)
         {
             return false;
         }

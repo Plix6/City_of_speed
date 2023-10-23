@@ -46,7 +46,7 @@ public class LeaderboardTable : MonoBehaviour
             entryTransform.Find("ScoreText").GetComponent<TMPro.TextMeshProUGUI>().text = record;
 
             // TODO - Get name data from data management script
-            // entryTransform.Find("NameText").GetComponent<TMPro.TextMeshProUGUI>().text = names[i].ToString();
+            entryTransform.Find("NameText").GetComponent<TMPro.TextMeshProUGUI>().text = leaderboard.GetLeaderboardNames()[rank-1];
         }
 
     }

@@ -8,7 +8,7 @@ public class Leaderboard : MonoBehaviour, IDataPersistence // TODO - Attach to a
 {
     private List<Timer> leaderboard = new List<Timer>();
     private List<string> leaderboardNames = new List<string>();
-    [SerializeField] private int leaderboardSize = 10;
+    private readonly int LEADERBOARD_SIZE = 10;
 
     // Only gives the string times of the timers
     public List<string> GetLeaderboardTimes() 
@@ -56,7 +56,7 @@ public class Leaderboard : MonoBehaviour, IDataPersistence // TODO - Attach to a
             leaderboardNames.Add(newUsername);
         }
         // If list exceeds 10 records, remove slowest timer
-        if (leaderboard.Count > leaderboardSize)
+        if (leaderboard.Count > LEADERBOARD_SIZE)
         {
             leaderboard.RemoveAt(leaderboard.Count - 1);
             leaderboardNames.RemoveAt(leaderboard.Count - 1);
