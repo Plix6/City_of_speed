@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameController gameController;
+    private GameController gameController;
 
     private void Start()
     {
@@ -14,7 +14,8 @@ public class MainMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
 
         // Get the game controller
-        gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        if(GameObject.Find("GameController") != null)
+            gameController = GameObject.Find("GameController").GetComponent<GameController>();
 
         if(gameController != null)
         {

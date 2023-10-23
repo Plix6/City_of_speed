@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private GameObject dataMangementObject;
+    [SerializeField] private GameObject dataManagementObject;
     private DataManagement dataManagement;
     private bool gameIsActive = false;
     private bool gameAsStarted = false;
@@ -14,15 +14,14 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        dataManagement = dataMangementObject.GetComponent<DataManagement>();
+        dataManagement = dataManagementObject.GetComponent<DataManagement>();
         // When game is finished, call dataManagement.StopTimer(); this will end timer + save into leaderboard
     }
 
     private void Update()
     {
         InputManager();
-
-        if(gameAsStarted && gameIsActive)
+        if (gameAsStarted && gameIsActive)
         {
             timerText.text = dataManagement.GetTimer();
         }
