@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class DataManagement : MonoBehaviour // TODO - Attach to an empty object to activate timer/checkpoint management
 {
-    private Timer timer = new Timer();
-    [SerializeField] private Checkpoint checkpoint = new Checkpoint();
     [SerializeField] private GameObject leaderboardObject;
+
+    private Timer timer = new Timer();
+    private Checkpoint checkpoint = new Checkpoint();
     private Leaderboard leaderboard;
 
     // Start is called before the first frame update
@@ -65,5 +66,29 @@ public class DataManagement : MonoBehaviour // TODO - Attach to an empty object 
     public string GetTimer()
     {
         return timer.ToString();
+    }
+
+    // Sets a position to the checkpoint inside the data management object
+    public void SetCheckpoint(Vector3 position)
+    {
+        checkpoint.SetCheckpoint(position);
+    }
+
+    // Gets current checkpoint inside the data management object
+    public Vector3 GetCheckpoint()
+    {
+        return checkpoint.GetCheckpoint();
+    }
+
+    // Checks if a checkpoint is set inside the data management object
+    public bool IsCheckPointSet()
+    {
+        return checkpoint.IsCheckpointSet();
+    }
+
+    // Resets the checkpoint inside the data management object
+    public void ResetCheckpoint()
+    {
+        checkpoint.ResetCheckpoint();
     }
 }
