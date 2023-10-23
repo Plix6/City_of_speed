@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    //---------------------
+    //      VARIABLES
+    //---------------------
+
     [SerializeField] private GameObject dataManagementObject;
     private DataManagement dataManagement;
     private bool gameIsActive = false;
@@ -14,14 +18,15 @@ public class GameController : MonoBehaviour
 
     [Header("Checkpoint")]
     public GameObject player;
-    public float checkPointCooldown;
-    private float checkPointCooldownTimer;
     public float checkPointRadius;
     public KeyCode backToCheckpoint = KeyCode.R;
 
     public GameObject targetsCheckpoint;
     private List<GameObject> targets = new List<GameObject>();
 
+    //--------------------------
+    //      START FUNCTION
+    //--------------------------
     private void Start()
     {
         dataManagement = dataManagementObject.GetComponent<DataManagement>();
@@ -38,6 +43,9 @@ public class GameController : MonoBehaviour
         dataManagement.SetCheckpoint(playerPos);
     }
 
+    //--------------------------
+    //      UPDATE FUNCTION
+    //--------------------------
     private void Update()
     {
         InputManager();
@@ -46,16 +54,18 @@ public class GameController : MonoBehaviour
             timerText.text = dataManagement.GetTimer();
 
             // Check if the player is in the checkpoint radius
-            Vector3 checkpointPos = checkpointTouch();
+            Vector3 checkpointPos = CheckpointTouch();
             if (checkpointPos != Vector3.zero)
             {
-                Debug.Log("Checkpoint touched");
                 // Set the checkpoint to the player position
                 dataManagement.SetCheckpoint(checkpointPos);
             }
         }
     }
 
+    //--------------------
+    //      FUNCTIONS
+    //--------------------
     private void InputManager()
     {
         // Start game
@@ -83,35 +93,28 @@ public class GameController : MonoBehaviour
             // Load main menu but don't destroy this game object
             SceneManager.LoadScene(0, LoadSceneMode.Additive);
         }
-
-        
-
-        updateCheckpointCooldown();
     }
 
-    public bool canBackToCheckpoint()
-    {
-        return checkPointCooldownTimer == 0;
-    }
-
+    // Get the checkpoint position
     public Vector3 GetCheckpoint()
     {
         return dataManagement.GetCheckpoint();
     }
+
+    // Respawn the player to the checkpoint
     public void BackToCheckpoint()
     {
-        if (gameAsStarted && gameIsActive && checkPointCooldownTimer == 0)
+        if (gameAsStarted && gameIsActive)
         {
             // Set the player position to the checkpoint
             Vector3 playerNextPos = dataManagement.GetCheckpoint();
-            Debug.Log(playerNextPos);
             // Add a y offset to the player position
             playerNextPos.y += 1;
             player.transform.position = playerNextPos;
-            checkPointCooldownTimer = checkPointCooldown;
         }
     }
 
+    // Set the game as active
     public void SetGameIsActive(bool boolean)
     {
         gameIsActive = true;
@@ -120,6 +123,7 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    // Set the game as started
     private void OnGUI()
     {
         if (!gameIsActive && !gameAsStarted)
@@ -132,18 +136,20 @@ public class GameController : MonoBehaviour
         }
     }
 
+    // Check if game is active
     public bool GetGameIsActive()
     {
         return gameIsActive;
     }
 
+    // Check if game is started
     public bool GetGameAsStarted()
     {
         return gameAsStarted;
     }
 
     // Check if the player is in the checkpoint radius
-    private Vector3 checkpointTouch()
+    private Vector3 CheckpointTouch()
     {
         foreach (GameObject target in targets)
         {
@@ -155,14 +161,5 @@ public class GameController : MonoBehaviour
             }
         }
         return Vector3.zero;
-    }
-
-    private void updateCheckpointCooldown()
-    {
-        checkPointCooldownTimer -= Time.deltaTime;
-        if (checkPointCooldownTimer < 0)
-        {
-            checkPointCooldownTimer = 0;
-        }
     }
 }

@@ -46,7 +46,7 @@ public class WallRunning : MonoBehaviour
     // References to other objects and scripts
     [Header("References")]
     public Transform orientation;
-    public PlayerCamera camera;
+    public PlayerCamera cam;
     private PlayerMovement pm;
     private Rigidbody rb;
 
@@ -178,9 +178,9 @@ public class WallRunning : MonoBehaviour
             wallRunTimer = maxWallRunTime;
 
             // Apply camera effects
-            camera.DoFov(90f);
-            if (wallLeft) camera.DoTilt(-5f);
-            if (wallRight) camera.DoTilt(5f);
+            cam.DoFov(90f);
+            if (wallLeft) cam.DoTilt(-5f);
+            if (wallRight) cam.DoTilt(5f);
         }
     }
 
@@ -214,8 +214,8 @@ public class WallRunning : MonoBehaviour
         lastWallCooldown = maxLastWallCooldown;
 
         // Reset camera effects
-        camera.DoFov(80f);
-        camera.DoTilt(0f);
+        cam.DoFov(80f);
+        cam.DoTilt(0f);
     }
 
     // Walljump function
