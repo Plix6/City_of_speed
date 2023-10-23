@@ -23,9 +23,9 @@ public class LeaderboardTable : MonoBehaviour
         // TODO - Get leaderboard data from data management script
         // Do not put 10 , put the size of the leaderboard
 
-        foreach (string record in leaderboard.GetLeaderboard())
+        foreach (string record in leaderboard.GetLeaderboardTimes())
         {
-            int rank = leaderboard.GetLeaderboard().IndexOf(record) + 1;
+            int rank = leaderboard.GetLeaderboardTimes().IndexOf(record) + 1;
             Transform entryTransform = Instantiate(entryTemplate, entryContainer);
             RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
             entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * (rank - 1));
