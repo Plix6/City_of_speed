@@ -15,6 +15,7 @@ public class DataPersistenceManager : MonoBehaviour // TODO - link to empty obje
 
     private void Awake()
     {
+        // Check that only one instance of the object is present, to avoid data conflicts
         if (instance != null)
         {
             Debug.LogError("More than one instance of the data persistence manager");
@@ -22,6 +23,7 @@ public class DataPersistenceManager : MonoBehaviour // TODO - link to empty obje
         instance = this;
     }
 
+    // Set properties and load game data
     private void Start()
     {
         this.fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
@@ -29,16 +31,19 @@ public class DataPersistenceManager : MonoBehaviour // TODO - link to empty obje
         LoadGame();
     }
 
+    // Save game on exit
     private void OnApplicationQuit()
     {
         SaveGame();
     }
 
+    // Create new set of game data
     public void NewGame()
     {
         this.gameData = new GameData();
     }
 
+    // Load data from disk file and transfer data to objects which need it
     public void LoadGame()
     {
         this.gameData = fileDataHandler.Load();
@@ -54,6 +59,7 @@ public class DataPersistenceManager : MonoBehaviour // TODO - link to empty obje
         }
     }
 
+    // Retrieves data to be saved from game objects and save data to disk file
     public void SaveGame()
     {
         foreach (IDataPersistence dataPersistenceObject in dataPersistencesObjects)
@@ -64,6 +70,8 @@ public class DataPersistenceManager : MonoBehaviour // TODO - link to empty obje
         fileDataHandler.Save(this.gameData);
     }
 
+    // Use Linq to get all game objects which implement the IDataPersistence interface
+    // and therefore load and save data to file on disk
     private List<IDataPersistence> FindAllDataPersistenceObjects()
     {
         IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();

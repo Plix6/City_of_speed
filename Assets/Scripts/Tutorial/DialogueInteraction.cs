@@ -11,12 +11,14 @@ public class DialogueInteraction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Load first dialogue line
         NextDialogue();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Switches to next dialogue on key up after press
         if (Input.GetKeyUp("Submit"))
         {
             NextDialogue();
@@ -25,11 +27,13 @@ public class DialogueInteraction : MonoBehaviour
 
     private void NextDialogue()
     {
+        // Next dialogue if it exists
         if (textLines.lines.Count > curCount)
         {
             text.text = textLines.lines[curCount];
             curCount++;
         } 
+        // Otherwise return empty string
         else
         {
             text.text = string.Empty;
