@@ -84,6 +84,12 @@ public class DataManagement : MonoBehaviour // TODO - Attach to an empty object 
         checkpoint.ResetCheckpoint();
     }
 
+    // Gives the number of previous checkpoints reached
+    public int GetPreviousCheckpointsNumber()
+    {
+        return checkpoint.GetPreviousCheckpointsNumber();
+    }
+
     // Sets the username. Returns a bool to check if username has been set
     public bool SetUsername(string name)
     {

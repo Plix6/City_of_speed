@@ -162,8 +162,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isOutOfMap()
     {
-        // Check if the player is under y = 20
-        if (transform.position.y < 20)
+        // Check if the player is under y = 26
+        if (transform.position.y < 26)
         {
             return true;
         }

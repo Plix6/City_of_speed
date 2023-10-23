@@ -10,9 +10,12 @@ public class GameController : MonoBehaviour
     //---------------------
 
     [SerializeField] private GameObject dataManagementObject;
+    [SerializeField] private GameObject usernameInputCanvas;
+    [SerializeField] private GameObject playerUICanvas;
     private DataManagement dataManagement;
     private bool gameIsActive = false;
     private bool gameAsStarted = false;
+    private int checkpointCount;
 
     public TMPro.TextMeshProUGUI timerText;
 
@@ -29,6 +32,7 @@ public class GameController : MonoBehaviour
     //--------------------------
     private void Start()
     {
+        usernameInputCanvas.SetActive(false);
         dataManagement = dataManagementObject.GetComponent<DataManagement>();
         // When game is finished, call dataManagement.StopTimer(); this will end timer + save into leaderboard
 
@@ -37,6 +41,7 @@ public class GameController : MonoBehaviour
         {
             targets.Add(child.gameObject);
         }
+        checkpointCount = targets.Count;
 
         // Set the player position to the first checkpoint
         Vector3 playerPos = player.transform.position;
@@ -60,6 +65,16 @@ public class GameController : MonoBehaviour
                 // Set the checkpoint to the player position
                 dataManagement.SetCheckpoint(checkpointPos);
             }
+        }
+
+        if (dataManagement.GetPreviousCheckpointsNumber() == 2) // checkpointCount + 1
+        {
+            dataManagement.StopTimer();
+            usernameInputCanvas.SetActive(true);
+            playerUICanvas.SetActive(false);
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 
