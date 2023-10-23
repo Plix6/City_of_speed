@@ -35,6 +35,7 @@ public class UsernameButton : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f); 
         DataPersistenceManager.instance.SaveGame();
+        yield return new WaitForSeconds(0.3f);
         SceneManager.LoadScene(0);
     }
 }
