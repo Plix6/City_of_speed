@@ -24,8 +24,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
-    bool canJump = true;
-    bool canDoubleJump = false;
+    private bool canJump = true;
+    private bool canDoubleJump = false;
 
     // Crouching variables
     [Header("Crouching")]
@@ -46,8 +46,8 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode crouchKey = KeyCode.LeftControl;
     public KeyCode backToCheckpoint = KeyCode.R;
 
-    float horizontalInput;
-    float verticalInput;
+    private float horizontalInput;
+    private float verticalInput;
 
     // Ground Check variables
     [Header("Ground Check")]
@@ -103,6 +103,11 @@ public class PlayerMovement : MonoBehaviour
                 rb.drag = groundDrag;
             else
                 rb.drag = 0f;
+
+            if(isOutOfMap())
+            {
+                StartCoroutine(Respawn());
+            }
         }
     }
     private void FixedUpdate()
@@ -113,13 +118,14 @@ public class PlayerMovement : MonoBehaviour
     //--------------------
     //      FUNCTIONS
     //--------------------
+
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // back to checkpoint
-        if (Input.GetKeyDown(backToCheckpoint) && gameController.canBackToCheckpoint())
+        if (Input.GetKeyDown(backToCheckpoint))
         {
             StartCoroutine(Respawn());
         }
@@ -154,11 +160,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private bool isOutOfMap()
+    {
+        // Check if the player is under y = 20
+        if (transform.position.y < 20)
+        {
+            return true;
+        }
+        return false;
+    }
+
     IEnumerator Respawn()
     {
         rb.isKinematic = true;
         yield return new WaitForSeconds(0.01f);
-        Debug.Log(gameController.GetCheckpoint());
         transform.position = gameController.GetCheckpoint();
         yield return new WaitForSeconds(0.01f);
         rb.isKinematic = false;

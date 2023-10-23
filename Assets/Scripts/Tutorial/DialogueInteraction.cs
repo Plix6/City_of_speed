@@ -41,7 +41,7 @@ public class DialogueInteraction : MonoBehaviour
         // Otherwise return empty string
         else
         {
-            Destroy(text);
+            text.text = string.Empty;
         }
     }
 }
