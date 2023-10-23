@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-//using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
 public class swinging : MonoBehaviour
 {
-
+    [Header("Keybinds")]
     [SerializeField] private KeyCode swingKey = KeyCode.Mouse0;
+
+    [Header("Visuals")]
     [SerializeField] private LineRenderer lr;
     [SerializeField] private Transform gunTip;
     [SerializeField] private Transform cam;
     [SerializeField] private Transform player;
+
+    [Header("Targets")]
     [SerializeField] private LayerMask grappleable;
 
+    [Header("SwingCalculations")]
     [SerializeField] private float maxSwingDistance = 50f;
     private Vector3 swingPoint;
     private Vector3 currentGrapplePosition;
@@ -21,6 +25,7 @@ public class swinging : MonoBehaviour
 
     private void Update()
     {
+        // Check if the player is trying to swing
         if (Input.GetKeyDown(swingKey)) StartSwing();
         if (Input.GetKeyUp(swingKey)) StopSwing();
     }
@@ -31,9 +36,11 @@ public class swinging : MonoBehaviour
     }
     private void StartSwing()
     {
+        // Throw a raycast to check if the player is looking at a grappleable object
        RaycastHit hit;
        if (Physics.Raycast(cam.position, cam.forward, out hit, maxSwingDistance, grappleable))
         {
+              // Create a joint for the player to swing around
               swingPoint = hit.point;
               joint = player.gameObject.AddComponent<SpringJoint>();
               joint.autoConfigureConnectedAnchor = false;
@@ -41,9 +48,9 @@ public class swinging : MonoBehaviour
     
               float distanceFromPoint = Vector3.Distance(player.position, swingPoint);
     
+              //Various parameters for the joint
               joint.maxDistance = distanceFromPoint * 0.8f;
               joint.minDistance = distanceFromPoint * 0.25f;
-    
               joint.spring = 4.5f;
               joint.damper = 7f;
               joint.massScale = 4.5f;
@@ -55,13 +62,15 @@ public class swinging : MonoBehaviour
     }
 
     private void StopSwing()
-    {
+    {   // Destroy the joint and the line renderer when not swinging
         lr.enabled = false;
         Destroy(joint);
     }
 
     void DrawRope()
     {
+
+        //Draw rope if grapple is active;
         if (!joint) return;
 
         currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, swingPoint, Time.deltaTime * 8f);
