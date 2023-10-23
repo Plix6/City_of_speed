@@ -15,6 +15,7 @@ public class FileDataHandler
         this.fileName = fileName;
     }
 
+    // Retrieve data from file on disk and convert it from JSON to GameData object
     public GameData Load()
     {
         string fullPath = Path.Combine(dirPath, fileName);
@@ -43,6 +44,7 @@ public class FileDataHandler
         return dataLoaded;
     }
 
+    // Convert data from GameData object to JSON and save it to file on disk
     public void Save(GameData gameData)
     {
         string fullPath = Path.Combine(dirPath, fileName);

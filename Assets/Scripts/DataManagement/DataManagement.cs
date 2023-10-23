@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class DataManagement : MonoBehaviour // TODO - Attach to an empty object to activate timer/checkpoint management
 {
-    private Timer timer = new Timer();
-    [SerializeField] private Checkpoint checkpoint = new Checkpoint();
     [SerializeField] private GameObject leaderboardObject;
+
+    private Timer timer = new Timer();
+    private string username = string.Empty;
+    private Checkpoint checkpoint = new Checkpoint();
     private Leaderboard leaderboard;
+
+    private int usernameCharactersLimit = 12;
 
     // Start is called before the first frame update
     void Start()
@@ -18,44 +22,88 @@ public class DataManagement : MonoBehaviour // TODO - Attach to an empty object 
     // Update is called once per frame
     void Update()
     {
+        // Increments timer with time if active
         if (timer.IsActive())
         {
             timer.Addtime(Time.deltaTime);
         }
-        if (timer.IsTimerEnded())
+        // Updates leaderboard and resets timer if timer is ended
+        if (timer.IsTimerEnded() && username != string.Empty)
         {
-            leaderboard.UpdateLeaderboard(this.timer);
+            leaderboard.UpdateLeaderboard(this.timer, username);
             this.timer = new Timer();
+            this.username = string.Empty;
         }
     }
 
+    // Pauses the game by stopping time
     public void Pause()
     {
         Time.timeScale = 0;
     }
 
+    // Un-pauses the game by resuming time
     public void Resume()
     {
         Time.timeScale = 1;
     }
 
+    // Toggles the timer inside the data management object
     public void ToggleTimer()
     {
         timer.ToggleTimer();
     }
 
+    // Stops the timer inside the data management object
     public void StopTimer()
     {
         timer.StopTimer();
     }
 
+    // Check if timer inside the data management object is active
     public bool IsTimerActive()
     {
         return timer.IsActive();
     }
 
+    // Get string of timer inside the data management object
     public string GetTimer()
     {
         return timer.ToString();
+    }
+
+    // Sets a position to the checkpoint inside the data management object
+    public void SetCheckpoint(Vector3 position)
+    {
+        checkpoint.SetCheckpoint(position);
+    }
+
+    // Gets current checkpoint inside the data management object
+    public Vector3 GetCheckpoint()
+    {
+        return checkpoint.GetCheckpoint();
+    }
+
+    // Checks if a checkpoint is set inside the data management object
+    public bool IsCheckPointSet()
+    {
+        return checkpoint.IsCheckpointSet();
+    }
+
+    // Resets the checkpoint inside the data management object
+    public void ResetCheckpoint()
+    {
+        checkpoint.ResetCheckpoint();
+    }
+
+    // Sets the username. Returns a bool to check if username has been set
+    public bool SetUsername(string name)
+    {
+        if (name.Length > usernameCharactersLimit)
+        {
+            return false;
+        }
+        this.username = name;
+        return true;
     }
 }
