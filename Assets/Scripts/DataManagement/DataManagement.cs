@@ -36,18 +36,6 @@ public class DataManagement : MonoBehaviour // TODO - Attach to an empty object 
         }
     }
 
-    // Pauses the game by stopping time
-    public void Pause()
-    {
-        Time.timeScale = 0;
-    }
-
-    // Un-pauses the game by resuming time
-    public void Resume()
-    {
-        Time.timeScale = 1;
-    }
-
     // Toggles the timer inside the data management object
     public void ToggleTimer()
     {

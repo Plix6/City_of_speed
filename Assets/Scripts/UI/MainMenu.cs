@@ -36,7 +36,7 @@ public class MainMenu : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
 
             // Activate game
-            gameController.SetGameIsActive();
+            gameController.SetGameIsActive(true);
         }
         else
         {

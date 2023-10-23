@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DialogueInteraction : MonoBehaviour
 {
-    [SerializeField] private Text text;
+    [SerializeField] private TMPro.TextMeshProUGUI text;
     [SerializeField] private TextLines textLines;
     private int curCount = 0;
     // Start is called before the first frame update
@@ -19,8 +19,13 @@ public class DialogueInteraction : MonoBehaviour
     void Update()
     {
         // Switches to next dialogue on key up after press
-        if (Input.GetKeyUp("Submit"))
+        if (Input.GetButtonUp("Jump"))
         {
+            NextDialogue();
+        }
+        if (Input.GetButtonUp("Submit"))
+        {
+            curCount = textLines.lines.Count + 1;
             NextDialogue();
         }
     }
