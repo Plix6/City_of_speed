@@ -26,6 +26,7 @@ public class PowerupSpeed : MonoBehaviour
 
         //Change la vitesse (on récupère la vitesse du player dans son script)
         PlayerMovement playerMovement = player.transform.parent.GetComponent<PlayerMovement>();
+        Debug.Log("Testeuh");
         playerMovement.walkSpeed *= multiplier;
         playerMovement.sprintSpeed *= multiplier;
 
