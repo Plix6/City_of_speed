@@ -57,23 +57,6 @@ public class PlayerCamera : MonoBehaviour
             orientation.rotation = Quaternion.Euler(0f, yRotation, 0f);
             
         }
-
-        // Unlock, show cursor
-        /*if (Input.GetButtonDown("Submit"))
-        {
-            if (!lockCamera)
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                lockCamera = true;
-            }
-            else
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                lockCamera = false;
-            }
-        }*/
     }
 
     //--------------------

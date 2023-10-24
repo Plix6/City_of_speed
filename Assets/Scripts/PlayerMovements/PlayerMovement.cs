@@ -95,15 +95,17 @@ public class PlayerMovement : MonoBehaviour
             // Ground Check
             grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-            MyInput();
-            SpeedControl();
-            StateHandler();
+            MyInput(); // Get player input
+            SpeedControl(); // Limit player speed
+            StateHandler(); // Handle player state
 
+            // Set drag
             if (grounded)
                 rb.drag = groundDrag;
             else
                 rb.drag = 0f;
 
+            // Check if the player is out of the map
             if(isOutOfMap())
             {
                 StartCoroutine(Respawn());
@@ -127,16 +129,16 @@ public class PlayerMovement : MonoBehaviour
         // back to checkpoint
         if (Input.GetKeyDown(backToCheckpoint))
         {
-            StartCoroutine(Respawn());
+            StartCoroutine(Respawn()); // Respawn the player
         }
 
         // Jump
         if (Input.GetKey(jumpKey) && canJump && grounded)
         {
             canJump = false;
-            canDoubleJump = true;
+            canDoubleJump = true; // Allow the player to double jump
             Jump();
-            Invoke(nameof(ResetJump), jumpCooldown);
+            Invoke(nameof(ResetJump), jumpCooldown); // Reset the jump after a certain amount of time
             
         }
         // Double Jump
@@ -146,17 +148,17 @@ public class PlayerMovement : MonoBehaviour
             Jump();
         }
 
-        // start crouch
+        // Start Crouch
         if (Input.GetKeyDown(crouchKey))
         {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z); // Change the player scale
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
         }
 
-        // stop crouch
+        // Stop Crouch
         if (Input.GetKeyUp(crouchKey))
         {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z); // Reset the player scale
         }
     }
 
@@ -172,12 +174,12 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator Respawn()
     {
-        rb.isKinematic = true;
+        rb.isKinematic = true; // Disable the player physics
         yield return new WaitForSeconds(0.01f);
-        transform.position = gameController.GetCheckpoint();
+        transform.position = gameController.GetCheckpoint(); // Set the player position to the checkpoint
         yield return new WaitForSeconds(0.01f);
-        rb.isKinematic = false;
-        rb.useGravity = true;
+        rb.isKinematic = false; // Enable the player physics
+        rb.useGravity = true; // Enable the player gravity
     }
 
     // State Machine for movement Function

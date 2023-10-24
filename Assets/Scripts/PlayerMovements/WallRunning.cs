@@ -187,17 +187,18 @@ public class WallRunning : MonoBehaviour
     // Wallrunning movement function
     private void WallRunningMovement()
     {
-        rb.useGravity = false;
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.useGravity = false; // Disable gravity
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // Reset y velocity
 
-        Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
+        Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal; // Get the wall normal 
 
-        Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
+        Vector3 wallForward = Vector3.Cross(wallNormal, transform.up); // Get the wall forward
 
-        if ((orientation.forward - wallForward).magnitude > (orientation.forward - -wallForward).magnitude)
+        // Check if the wall is in front or behind the player
+        if ((orientation.forward - wallForward).magnitude > (orientation.forward - -wallForward).magnitude) 
             wallForward = -wallForward;
 
-        // forward movement
+        // Add force to the player
         rb.AddForce(wallForward * wallRunForce, ForceMode.Force);
 
         // push to wall force
